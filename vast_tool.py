@@ -20,12 +20,38 @@ def zip_folder(folder_path):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Upload file ZIP atau folder ke Hugging Face repo (dataset atau model).",
-        epilog="Contoh:\n"
-               "python upload.py --token=hf_xxx --file=/path/file.zip --repo_id=username/repo --repo_type=dataset\n"
-               "python upload.py --token=hf_xxx --path2zip=/path/folder --repo_id=username/repo --repo_type=dataset --auto-del-path=yes",
+        description="""
+📤 Upload file ZIP atau folder ke Hugging Face repo (dataset atau model).
+
+Gunakan salah satu dari:
+- --file: jika sudah punya file .zip yang siap upload
+- --path2zip: jika ingin upload folder (akan di-zip otomatis)
+
+""",
+        epilog="""
+🔧 ARGUMEN LENGKAP:
+
+--token           🔐 Token akses Hugging Face kamu (hf_...).
+--file            📦 Path file ZIP yang akan diupload langsung.
+--path2zip        📁 Path folder yang akan di-zip dan diupload.
+--auto-del-path   🧨 Jika 'yes', folder sumber akan dihapus setelah upload (default: no).
+--repo_id         📂 ID repositori tujuan di Hugging Face (misal: PapaRazi/id-tts-v2).
+--repo_type       🏷️  Jenis repo: dataset atau model (default: dataset).
+
+💡 CONTOH PENGGUNAAN:
+
+1. Upload file ZIP:
+   python upload.py --token=hf_abc123 --file=/path/file.zip --repo_id=username/repo --repo_type=dataset
+
+2. Upload folder, auto-zip:
+   python upload.py --token=hf_abc123 --path2zip=/data/folder --repo_id=username/repo --repo_type=dataset
+
+3. Upload folder dan hapus sumber:
+   python upload.py --token=hf_abc123 --path2zip=/data/folder --repo_id=username/repo --repo_type=dataset --auto-del-path=yes
+""",
         formatter_class=argparse.RawTextHelpFormatter
     )
+
     parser.add_argument("--token", required=True, help="Token HF kamu (hf_...)")
     parser.add_argument("--file", help="Path file ZIP yang akan diupload")
     parser.add_argument("--path2zip", help="Path folder yang akan di-zip lalu diupload")
