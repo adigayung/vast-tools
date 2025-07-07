@@ -78,7 +78,7 @@ Gunakan salah satu dari:
         print(f"🗜️  Membuat ZIP dari folder: {args.path2zip}")
         args.file = zip_folder(args.path2zip)
         cleanup_zip = True
-        if args.auto-del-path == "yes":
+        if args.auto_del_path == "yes":
             cleanup_folder = True
 
     if not os.path.isfile(args.file):
