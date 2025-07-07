@@ -34,7 +34,7 @@ Gunakan salah satu dari:
 --token           🔐 Token akses Hugging Face kamu (hf_...).
 --file            📦 Path file ZIP yang akan diupload langsung.
 --path2zip        📁 Path folder yang akan di-zip dan diupload.
---auto-del-path   🧨 Jika 'yes', folder sumber akan dihapus setelah upload (default: no).
+--auto_del_path   🧨 Jika 'yes', folder sumber akan dihapus setelah upload (default: no).
 --repo_id         📂 ID repositori tujuan di Hugging Face (misal: PapaRazi/id-tts-v2).
 --repo_type       🏷️  Jenis repo: dataset atau model (default: dataset).
 
@@ -47,7 +47,7 @@ Gunakan salah satu dari:
    python upload.py --token=hf_abc123 --path2zip=/data/folder --repo_id=username/repo --repo_type=dataset
 
 3. Upload folder dan hapus sumber:
-   python upload.py --token=hf_abc123 --path2zip=/data/folder --repo_id=username/repo --repo_type=dataset --auto-del-path=yes
+   python upload.py --token=hf_abc123 --path2zip=/data/folder --repo_id=username/repo --repo_type=dataset --auto_del_path=yes
 """,
         formatter_class=argparse.RawTextHelpFormatter
     )
@@ -55,7 +55,7 @@ Gunakan salah satu dari:
     parser.add_argument("--token", required=True, help="Token HF kamu (hf_...)")
     parser.add_argument("--file", help="Path file ZIP yang akan diupload")
     parser.add_argument("--path2zip", help="Path folder yang akan di-zip lalu diupload")
-    parser.add_argument("--auto-del-path", choices=["yes", "no"], default="no",
+    parser.add_argument("--auto_del_path", choices=["yes", "no"], default="no",
                         help="Jika 'yes', folder --path2zip akan dihapus setelah upload (default: no)")
     parser.add_argument("--repo_id", required=True, help="ID repositori HF (misal: PapaRazi/id-tts-v2)")
     parser.add_argument("--repo_type", default="dataset", choices=["dataset", "model"],
