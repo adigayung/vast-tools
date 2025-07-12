@@ -12,10 +12,13 @@ import argparse
 import os
 import sys
 import shutil
+import datetime
 
 def zip_folder(folder_path):
-    zip_path = f"{folder_path.rstrip(os.sep)}.zip"
-    shutil.make_archive(base_name=folder_path, format="zip", root_dir=folder_path)
+    now = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    folder_name = os.path.basename(os.path.normpath(folder_path))
+    zip_filename = f"{folder_name}_{now}"
+    zip_path = shutil.make_archive(base_name=zip_filename, format="zip", root_dir=folder_path)
     return zip_path
 
 def main():
