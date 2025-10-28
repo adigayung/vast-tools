@@ -5,6 +5,7 @@ import io
 import re
 import uuid
 import json
+import time
 from concurrent.futures import ThreadPoolExecutor
 from urllib import request as urllib_request
 from urllib import parse as urllib_parse
@@ -85,6 +86,23 @@ def destroy_instance(instance_id):
         print("Response:", response.text)
         return False
 
+def check_comfyui_ready(server_address, timeout=5):
+    """
+    Cek apakah server ComfyUI siap menerima request
+    """
+    try:
+        url = f"http://{server_address}/"  # ganti dengan endpoint ComfyUI yang valid
+        resp = requests.get(url, timeout=timeout)
+        if resp.status_code == 200:
+            print(f"{Fore.GREEN}✅ ComfyUI ready at {server_address}{Style.RESET_ALL}")
+            return True
+        else:
+            print(f"{Fore.YELLOW}⚠ ComfyUI not ready (status {resp.status_code}){Style.RESET_ALL}")
+            return False
+    except requests.exceptions.RequestException as e:
+        print(f"{Fore.RED}❌ Error koneksi ke ComfyUI: {e}{Style.RESET_ALL}")
+        return False
+    
 class LoadWorkFlow:
     def __init__(self, workflow_path=None, workflow_json=None, resolution=None):
         # Load workflow JSON
@@ -725,6 +743,13 @@ def start():
 
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
+    start_time = time.time()
+    while not check_comfyui_ready(COMFYUI_SERVER):
+        elapsed = int(time.time() - start_time)
+        minutes, seconds = divmod(elapsed, 60)
+        print(f"{Fore.CYAN}⏳ Menunggu ComfyUI siap... ({minutes}m {seconds}s){Style.RESET_ALL}")
+        time.sleep(5)
+    print(f"{Fore.GREEN}✅ ComfyUI siap, mulai generate HD...{Style.RESET_ALL}")
     start()
 
 
